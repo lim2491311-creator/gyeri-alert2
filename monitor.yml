@@ -1,0 +1,75 @@
+name: 계리직 공식 채용공고 감시 및 웹사이트 갱신
+on:
+  workflow_dispatch:
+    inputs:
+      test_email:
+        description: 'Gmail 이메일 연결 테스트 (실제 공고 아님)'
+        type: boolean
+        required: false
+        default: false
+  push:
+    branches: [main]
+  schedule:
+    # UTC 매시 17분, 한국 시간으로 매시간 17분경. GitHub 사정에 따라 지연될 수 있습니다.
+    - cron: '17 * * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gyeri-notice-monitor
+  cancel-in-progress: false
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: 의존성 설치
+        run: |
+          python -m pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: 테스트 수행
+        run: pytest -q
+      - name: 우정사업본부 및 국가공무원채용시스템 확인 / 이메일 발송
+        env:
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: '465'
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+        run: python scripts/check_notices.py
+      - name: 이메일 연결 테스트 (선택)
+        if: ${{ inputs.test_email == true }}
+        env:
+          SMTP_HOST: smtp.gmail.com
+          SMTP_PORT: '465'
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+        run: python scripts/test_email.py
+      - name: 검사 결과 저장
+        run: |
+          git config user.name 'gyeri-alert-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/data/notices.json state/seen.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: refresh official recruitment notices'
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: 웹사이트 배포
+        id: deployment
+        uses: actions/deploy-pages@v4
