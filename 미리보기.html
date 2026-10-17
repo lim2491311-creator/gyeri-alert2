@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f3">
+  <meta name="description" content="우정사업본부·국가공무원 채용시스템의 계리직 공고를 확인하고 이메일 및 웹 알림을 제공하는 개인 알리미.">
+  <title>계리직 공고 알리미 — 놓치지 않고, 공부에 집중하기</title>
+  <style>
+:root{--ink:#21342b;--sub:#718079;--green:#245a43;--green-dark:#184432;--teal:#4d7d63;--surface:#fff;--border:#e9ece7;--bg:#f7f8f4;--mint:#e9f1e8;--pale:#f3f5ee;font-family:'DM Sans','Noto Sans KR',sans-serif;color:var(--ink)}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-size:14px}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #82ac91;outline-offset:3px}.app-shell{min-height:100vh;display:flex}.sidebar{position:sticky;top:0;height:100vh;width:242px;flex-shrink:0;background:#fcfdf9;border-right:1px solid #e9eee8;padding:34px 18px 28px 20px;display:flex;flex-direction:column}.brand{display:flex;gap:11px;align-items:center;padding:0 7px}.brand-mark{width:40px;height:40px;background:#285e47;color:#fff;border-radius:13px;display:grid;place-items:center}.brand strong{display:block;letter-spacing:-.045em;font-size:15px}.brand small{display:block;color:#9ca9a0;font-size:10px;font-weight:700;letter-spacing:.18em;margin-top:3px}.nav{display:flex;flex-direction:column;gap:7px;margin-top:62px}.nav-item{display:flex;align-items:center;gap:14px;padding:14px 18px;color:#7f8a83;font-weight:600;border-radius:11px;transition:.2s}.nav-item.active{background:#eaf1e9;color:#275a43}.nav-item:hover{background:#eff3ee}.nav-icon{width:19px;text-align:center;font-size:18px;font-weight:500}.sidebar-bottom{margin-top:auto;padding:0 11px}.sidebar-note{color:#3f7258;font-size:11px;display:flex;align-items:center;gap:8px;font-weight:700}.pulse,.eyebrow-dot,.source-dot,.small-indicator{width:7px;height:7px;border-radius:50%;background:#4f9d73;display:inline-block;box-shadow:0 0 0 4px #e2f1e4}.sidebar-bottom p{font-size:14px;line-height:1.85;color:#62736a;margin:17px 0 24px}.external-small{font-size:12px;color:#315e46;font-weight:700}.main{flex:1;min-width:0;max-width:1450px;margin:0 auto;padding:0 54px}.topbar{height:94px;display:flex;justify-content:space-between;align-items:center;color:#919d95;font-size:12px}.breadcrumbs{font-weight:600}.breadcrumbs span{margin:0 10px;color:#bdc6be}.top-date{font-size:12px;letter-spacing:.02em}.hero{position:relative;overflow:hidden;border-radius:22px;min-height:330px;background:linear-gradient(112deg,#edf2e9 0%,#eff3ec 61%,#e2ecdf 100%);padding:48px 54px;display:flex;align-items:center}.hero-copy{z-index:1}.eyebrow{font-size:11px;letter-spacing:.05em;font-weight:800;color:#436e55;background:#dce9da;border-radius:100px;padding:8px 13px;display:inline-flex;gap:8px;align-items:center}.eyebrow-dot{width:6px;height:6px;box-shadow:none}.hero h1{font-size:35px;line-height:1.5;letter-spacing:-.075em;margin:19px 0 11px;font-weight:800}.hero h1 em{color:#31664d;font-style:normal}.hero p{line-height:1.9;color:#6c8070;font-size:13px;margin:0}.hero p strong{color:#305743}.hero-actions{display:flex;gap:12px;margin-top:26px}.primary-button,.light-button{border-radius:9px;font-weight:700;font-size:12px;padding:12px 17px;display:inline-flex;gap:24px;align-items:center}.primary-button{background:#285f46;color:white}.primary-button:hover{background:#174831}.light-button{color:#385943;background:#fff9}.light-button:hover{background:white}.hero-illustration{position:absolute;width:375px;height:310px;right:10px;top:5px;display:grid;place-items:center}.orbit{position:absolute;border:1px solid #c9d9ca;border-radius:50%;transform:rotate(-25deg)}.orbit-one{width:290px;height:240px}.orbit-two{width:205px;height:190px}.note-stack{position:absolute;width:160px;height:120px;background:#f8faf6;border:1px solid #e2eadf;border-radius:15px;box-shadow:0 12px 22px #66826a22}.note-stack-1{transform:rotate(-13deg) translate(-9px,-9px)}.note-stack-2{transform:rotate(12deg) translate(12px,4px)}.envelope{width:190px;height:132px;position:relative;background:#f9fbf5;border:3px solid #477b5d;border-radius:12px;box-shadow:0 18px 37px #71967c40;transform:rotate(-4deg);z-index:2;overflow:hidden}.env-flap{position:absolute;top:-2px;left:-4px;width:200px;height:103px;background:#d5e6d6;clip-path:polygon(0 0,100% 0,50% 95%);border-bottom:3px solid #477b5d}.env-bell{position:absolute;top:52px;left:78px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#3d805c;color:#fff;font-size:23px;transform:rotate(4deg)}.floating-tag{position:absolute;z-index:4;right:5px;top:62px;background:#fff;padding:10px 13px;border-radius:7px;transform:rotate(9deg);box-shadow:0 9px 17px #60846a24;font-size:10px;letter-spacing:.12em;color:#477556;font-weight:800}.floating-tag span{margin-left:8px}.sparkle{position:absolute;color:#70a881;font-size:26px}.sparkle1{top:55px;left:40px}.sparkle2{bottom:43px;right:65px;font-size:16px}.stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:21px}.stat-card{padding:24px 26px;background:#fff;border:1px solid #eef0ec;border-radius:15px;min-height:151px;box-shadow:0 4px 15px #394c3e07}.stat-label{font-size:12px;color:#87978c;display:flex;align-items:center;justify-content:space-between;font-weight:600}.stat-icon{color:#8bae94;font-size:18px}.stat-value{display:block;font-size:26px;letter-spacing:-.05em;margin:15px 0 4px;line-height:1.3;color:#233d2d;font-weight:800}.stat-value.number{font-family:'DM Sans',sans-serif;letter-spacing:-.03em}.stat-value.number small{font-size:13px;font-weight:600;margin-left:5px}.stat-value.date{font-size:20px;letter-spacing:-.04em;margin-top:19px}.stat-caption{font-size:11px;color:#acb5ad}.notices-section{margin-top:58px}.section-heading{display:flex;align-items:end;justify-content:space-between;gap:16px}.section-kicker{color:#6a9c77;letter-spacing:.17em;font-size:10px;font-weight:800}.section-heading h2,.guide-copy h2{margin:7px 0 8px;letter-spacing:-.055em;font-size:25px}.section-heading p{color:#9aa59d;font-size:12px;margin:0}.refresh-button{border:1px solid #e3e8e2;background:#fff;padding:11px 15px;border-radius:9px;color:#647669;font-size:12px;font-weight:700}.refresh-button:hover{background:#edf3ea}.refresh-button span{font-size:18px;margin-right:5px;vertical-align:-1px}.notice-toolbar{margin-top:28px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #e5ebe3}.filter-tabs{display:flex;gap:24px}.filter-tab{border:0;background:transparent;color:#9ca9a0;padding:0 3px 13px;font-size:12px;font-weight:700;border-bottom:2px solid transparent}.filter-tab.active{color:#2b6045;border-color:#356b4e}.source-label{font-size:11px;color:#8d9d91;display:flex;align-items:center;gap:9px;padding-bottom:12px}.source-dot{width:6px;height:6px;box-shadow:none}.notice-list{background:#fff;border:1px solid var(--border);border-top:0;border-radius:0 0 14px 14px;overflow:hidden;min-height:130px}.notice-card{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:23px 27px;border-bottom:1px solid #eef0ec;transition:background .15s}.notice-card:last-child{border-bottom:0}.notice-card:hover{background:#fcfdfb}.notice-card-info{min-width:0}.notice-meta{display:flex;gap:9px;align-items:center;color:#9eaaa0;font-size:11px;margin-bottom:10px}.category-pill{color:#3e7554;background:#edf4ed;border-radius:5px;padding:4px 7px;font-size:10px;font-weight:700}.example-pill{color:#a08e61;background:#faf3dc;border-radius:5px;padding:4px 7px;font-size:10px}.year-pill{color:#4e769a;background:#edf3fa;border-radius:5px;padding:4px 7px;font-size:10px}.notice-title{font-size:13px;font-weight:700;line-height:1.8;letter-spacing:-.03em;margin:0}.notice-open{background:#f3f7f2;border:1px solid #e8ede8;flex-shrink:0;color:#568166;border-radius:10px;width:40px;height:40px;display:grid;place-items:center;font-size:17px}.notice-open:hover{background:#e1eddf}.loading-message,.empty-message{padding:41px 24px;text-align:center;color:#879789;font-size:12px;line-height:1.85}.empty-message strong{color:#4b6451;display:block;font-size:15px;margin-bottom:6px}.data-message{padding:13px 2px 0;color:#9aa79e;font-size:11px;min-height:26px;line-height:1.7}.data-message.warning{color:#a76f2c}.data-message.error{color:#b05252}.notice-footer{display:flex;justify-content:center;margin-top:20px}.notice-footer a{font-size:12px;color:#527a60;font-weight:700;border-bottom:1px solid #c5d4c6;padding-bottom:4px}.notice-footer span{margin-left:10px}.guide-section{margin:66px 0 51px;border-radius:20px;background:#edf2e9;padding:38px 43px;display:grid;grid-template-columns:1fr 1.04fr;gap:40px}.guide-copy h2{font-size:26px;line-height:1.55;margin-top:12px}.guide-copy p{font-size:12px;color:#7d8d7e;line-height:2;max-width:330px;margin-top:13px}.guide-status{margin-top:26px;background:#fff;color:#607d68;font-size:11px;font-weight:700;display:inline-flex;align-items:center;gap:12px;padding:11px 13px;border-radius:8px}.small-indicator{box-shadow:none}.guide-steps{display:flex;flex-direction:column;gap:21px}.step{display:flex;gap:16px;align-items:flex-start}.step>span{width:36px;height:36px;border:1px solid #d0ddcf;border-radius:10px;display:grid;place-items:center;color:#679575;font-size:12px;font-weight:800;flex-shrink:0;background:#f9fcf8}.step strong{display:block;font-size:13px;margin:1px 0 5px}.step p{color:#829283;font-size:11px;margin:0;line-height:1.7}.setup-link{background:#275b42;color:#fff;border-radius:9px;padding:13px 17px;font-size:12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;margin-top:4px;max-width:320px}.footer{border-top:1px solid #e9ede6;padding:26px 0 35px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#a2aca2;font-size:10px}.footer span{margin:0 8px}.footer a{color:#4e7960;text-decoration:underline}
+@media(max-width:1150px){.main{padding:0 30px}.hero-illustration{right:-65px;opacity:.85}.sidebar{width:206px}.hero{padding:38px 35px}.hero h1{font-size:30px}.guide-section{gap:17px;padding:32px}}@media(max-width:860px){.sidebar{width:79px;padding:26px 12px}.brand{padding:0;justify-content:center}.brand>span:last-child,.nav-item:not(.active),.sidebar-bottom{display:none}.nav{margin-top:50px}.nav-item.active{padding:15px;justify-content:center;font-size:0}.nav-icon{font-size:21px}.main{padding:0 25px}.hero-illustration{right:-125px;opacity:.35}.guide-section{grid-template-columns:1fr 1fr}}@media(max-width:650px){.sidebar{display:none}.main{padding:0 19px}.topbar{height:65px}.top-date{font-size:10px}.hero{padding:33px 25px;min-height:312px}.hero h1{font-size:27px}.hero p{font-size:12px}.hero-illustration{right:-188px;top:12px;opacity:.21}.desktop-break{display:none}.hero-actions{gap:7px}.primary-button,.light-button{font-size:11px;padding:12px 13px;gap:9px}.stats-grid{grid-template-columns:1fr 1fr;gap:10px}.stats-grid .stat-card:last-child{grid-column:1/-1}.stat-card{padding:20px;min-height:128px}.stat-value{font-size:22px}.stat-value.date{font-size:19px}.stat-label{font-size:10px}.stat-caption{font-size:10px}.notices-section{margin-top:44px}.section-heading h2{font-size:22px}.section-heading p{font-size:11px}.refresh-button{padding:9px;font-size:11px}.source-label{font-size:9px}.filter-tabs{gap:15px}.filter-tab{font-size:11px}.notice-card{padding:20px 15px}.notice-title{font-size:12px}.notice-meta{flex-wrap:wrap}.notice-open{height:33px;width:33px}.guide-section{grid-template-columns:1fr;margin-top:48px;padding:26px}.guide-copy h2{font-size:24px}.guide-steps{margin-top:4px}.footer{line-height:1.8}.hero-actions a{white-space:nowrap}}
+/* 2027 시험 예상일과 알림 추가 */
+.stats-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.dday-card{background:#eaf3e8;border-color:#dceadb}
+.dday-card .stat-value{color:#245a43}
+.source-health{display:flex;gap:8px;flex-wrap:wrap;font-size:11px;margin-top:12px}
+.source-health span{border:1px solid #dfeadf;background:#fff;border-radius:30px;padding:6px 10px;color:#5d7c64}
+.source-health .source-failure{color:#b66d52;border-color:#edd4c9}
+.new-notice-banner{background:#e1efdf;color:#245a43;padding:14px 17px;border:1px solid #c3ddbe;border-radius:10px;margin-top:14px;font-weight:700}
+.notice-footer{gap:18px;flex-wrap:wrap}
+.guide-status{margin-top:12px;margin-right:8px}
+.guide-copy .action-button{max-width:290px;border:0;text-align:left;margin-top:19px}
+.site-alert-note{background:#fff9;padding:12px 14px;border-radius:9px;font-size:11px;line-height:1.8;color:#708073}
+.source-brand{font-weight:700;color:#5a7c60;margin-left:2px}
+@media(max-width:1150px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid .stat-card:last-child{grid-column:auto}.source-label{font-size:9px;max-width:152px;text-align:right}.notice-footer{justify-content:flex-start}}
+</style>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body><div style="padding:10px 18px;text-align:center;color:#456b54;background:#e5eee1;font:600 12px sans-serif">디자인 미리보기 · 2027년 4월 17일은 예상 시험일 · 실제 알림은 GitHub 배포/연결 후 작동</div>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="사이트 메뉴">
+      <a class="brand" href="./" aria-label="계리직 공고 알리미 홈">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="26" height="26" fill="none"><rect x="6" y="11" width="36" height="26" rx="5" stroke="currentColor" stroke-width="2.5"/><path d="m9 15 15 12 15-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M24 5v6M30 8l-3 3" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+        <span><strong>계리직 알리미</strong><small>NOTICE WATCH</small></span>
+      </a>
+      <nav class="nav">
+        <a class="nav-item active" href="#home"><span class="nav-icon">◫</span>대시보드</a>
+        <a class="nav-item" href="#notices"><span class="nav-icon">▤</span>공식 공고</a>
+        <a class="nav-item" href="#guide"><span class="nav-icon">◎</span>알림 설정</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-note"><span class="pulse" aria-hidden="true"></span>공식 채용정보 확인 도구</div>
+        <p>공고 확인은 자동으로.<br>공부는 내 속도대로.</p>
+        <a href="https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do" target="_blank" rel="noopener noreferrer" class="external-small">공식 시험공고 열기 ↗</a>
+      </div>
+    </aside>
+
+    <main id="home" class="main">
+      <header class="topbar"><div class="breadcrumbs">내 공부 도구 <span>›</span> 공고 알리미</div><div class="top-date" id="today">―</div></header>
+      <section class="hero" aria-label="소개">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> 2027 계리직 시험 준비</span>
+          <h1>공고 걱정은 덜고,<br><em>오늘의 공부에 집중하세요.</em></h1>
+          <p>우정사업본부 채용공고를 <strong>우선 확인</strong>하고, 국가공무원 채용시스템도 함께 점검합니다.<br class="desktop-break"> 필요한 공고만 이메일과 웹사이트에서 확인하세요.</p>
+          <div class="hero-actions">
+            <a class="primary-button" href="#notices">최근 공고 확인 <span>↗</span></a>
+            <a class="light-button" href="#guide">알림 연결하기 <span>→</span></a>
+          </div>
+        </div>
+        <div class="hero-illustration" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="note-stack note-stack-1"></div><div class="note-stack note-stack-2"></div>
+          <div class="envelope"><div class="env-flap"></div><div class="env-bell">✦</div></div>
+          <div class="floating-tag">NEW NOTICE <span>↗</span></div>
+          <span class="sparkle sparkle1">✧</span><span class="sparkle sparkle2">✦</span>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="확인 현황">
+        <div class="stat-card dday-card"><span class="stat-label">예상 필기시험일 <span class="stat-icon">◷</span></span><strong id="exam-dday" class="stat-value number">계산 중</strong><span class="stat-caption">2027년 4월 17일 · 예상일, 공식 발표 아님</span></div>
+        <div class="stat-card"><span class="stat-label">공고 확인 상태 <span class="stat-icon">◉</span></span><strong id="monitor-status" class="stat-value">설정 대기</strong><span id="monitor-caption" class="stat-caption">연결 후 상태가 표시됩니다</span></div>
+        <div class="stat-card"><span class="stat-label">2027년 확인된 공고 <span class="stat-icon">▧</span></span><strong id="count-2027" class="stat-value number">—<small>건</small></strong><span class="stat-caption">두 공식 사이트의 계리직 공고 기준</span></div>
+        <div class="stat-card"><span class="stat-label">최근 확인 시각 <span class="stat-icon">◷</span></span><strong id="last-checked" class="stat-value date">미확인</strong><span class="stat-caption">GitHub Actions 약 1시간마다 확인</span></div>
+      </section>
+
+      <section id="notices" class="notices-section">
+        <div class="section-heading">
+          <div><span class="section-kicker">OFFICIAL ANNOUNCEMENTS</span><h2>계리직 시험공고</h2><p>출처가 분명한 공식 공고만 확인하세요.</p></div>
+          <button class="refresh-button" id="reload-button" type="button" title="저장된 최신 검사 결과를 다시 불러옵니다. 공식 사이트 재검사는 예약 작업이 수행합니다."><span aria-hidden="true">↻</span> 화면 갱신</button>
+        </div>
+        <div class="notice-toolbar"><div class="filter-tabs" role="group" aria-label="공고 필터"><button class="filter-tab active" data-filter="all" type="button" aria-pressed="true">전체 공고</button><button class="filter-tab" data-filter="2027" type="button" aria-pressed="false">2027년만</button></div><div class="source-label"><span class="source-dot"></span> 우정사업본부 + 국가공무원 채용시스템</div></div>
+        <div id="notices-list" class="notice-list" aria-live="polite"><div class="loading-message">공고 데이터를 불러오는 중입니다…</div></div>
+        <div id="data-message" class="data-message" role="status"></div>
+        <div id="source-health" class="source-health" aria-live="polite"></div>
+        <div id="new-notice-banner" class="new-notice-banner" role="status" hidden></div>
+        <div class="notice-footer"><a target="_blank" rel="noopener noreferrer" href="https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do">우정사업본부 채용공고 ↗</a><a target="_blank" rel="noopener noreferrer" href="https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do">국가공무원 채용시스템 ↗</a></div>
+      </section>
+
+      <section id="guide" class="guide-section">
+        <div class="guide-copy">
+          <span class="section-kicker">NOTIFICATIONS</span>
+          <h2>새 공고는 웹 알림<br>또는 이메일로.</h2>
+          <p>웹 알림은 이 웹사이트를 열었을 때 새 공고를 알려드립니다. 이메일은 GitHub에서 자동 확인하므로 사이트를 닫아도 받을 수 있습니다.</p>
+          <button id="enable-web-notifications" class="setup-link action-button" type="button">이 브라우저에서 알림 켜기 <span>↗</span></button>
+          <div id="browser-status" class="guide-status"><span class="small-indicator"></span>웹 알림 설정 확인 중</div>
+          <div id="email-status" class="guide-status"><span class="small-indicator"></span>이메일 연결 상태 확인 중</div>
+        </div>
+        <div class="guide-steps">
+          <div class="step"><span>01</span><div><strong>GitHub Pages 연결</strong><p>압축파일을 GitHub 저장소에 올려 웹사이트를 엽니다.</p></div></div>
+          <div class="step"><span>02</span><div><strong>이메일 연결 (선택)</strong><p>Gmail 앱 비밀번호 및 수신주소를 GitHub Secrets에만 저장합니다. 사이트에는 이메일 주소를 표시하지 않습니다.</p></div></div>
+          <div class="step"><span>03</span><div><strong>자동 감시 활성화</strong><p>약 1시간마다 우정사업본부와 국가공무원 채용시스템을 점검합니다. 새 공고가 있을 때만 메일이 발송됩니다.</p></div></div>
+          <div class="site-alert-note">웹사이트 알림은 <strong>사이트를 열어둔 상태 또는 다시 방문할 때</strong>만 표시됩니다. 브라우저를 닫은 상태에서도 받으시려면 이메일 알림을 연결하세요.</div>
+          <a href="https://github.com/new" class="setup-link" target="_blank" rel="noopener noreferrer">GitHub 저장소 만들기 <span>↗</span></a>
+        </div>
+      </section>
+      <footer class="footer"><div>계리직 공고 알리미 <span>·</span> 개인 수험정보 보조 도구</div><div>비공식 사이트입니다. 2027년 4월 17일은 예상 시험일입니다. 확정 정보는 반드시 <a href="https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do" target="_blank" rel="noopener noreferrer">공식 공고</a>를 확인하세요.</div></footer>
+    </main>
+  </div>
+  <script>window.fetch = async () => ({ok:true,json:async()=>({"checked_at": null, "status": "setup", "message": "GitHub Actions를 실행하면 우정사업본부 및 국가공무원 채용시스템 공고가 갱신됩니다.", "alerts_enabled": false, "email_enabled": false, "sources": {"우정사업본부": {"ok": false, "error": "아직 확인 전"}, "국가공무원 채용시스템": {"ok": false, "error": "아직 확인 전"}}, "new_ids": [], "source_url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do", "items": [{"id": "sample-2026", "title": "2026년도 우정사업본부 우정9급(계리) 공무원 공개경쟁채용시험 시행계획 공고", "date": "2025-12-24", "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do", "category": "계리직", "source": "우정사업본부", "sources": ["우정사업본부"], "example": true}]})});</script><script>'use strict';
+let currentFilter = 'all';
+let currentData = null;
+const byId = (id) => document.getElementById(id);
+const KST = { timeZone: 'Asia/Seoul', hour12: false };
+const POSTAL = 'https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do';
+const GOSI = 'https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do';
+const WEB_ENABLED_KEY = 'gyeri-web-notice-enabled-v2';
+const WEB_SEEN_KEY = 'gyeri-web-notice-seen-v2';
+const storage = {
+  get(key) { try { return localStorage.getItem(key); } catch (_) { return null; } },
+  set(key, value) { try { localStorage.setItem(key, value); return true; } catch (_) { return false; } }
+};
+function safeSourceUrl(url) {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'https:' && ['gongmuwon.gosi.kr', 'www.koreapost.go.kr'].includes(parsed.hostname)
+      ? parsed.href : POSTAL;
+  } catch (_) { return POSTAL; }
+}
+function formatKstDate(value, includeTime = false) {
+  if (!value) return '미확인';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '미확인';
+  const settings = includeTime ? {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'}
+    : {year:'numeric', month:'long', day:'numeric', weekday:'long'};
+  return new Intl.DateTimeFormat('ko-KR', {...KST, ...settings}).format(date);
+}
+function kstToday() {
+  const parts = new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const map = Object.fromEntries(parts.map(x=>[x.type,Number(x.value)]));
+  return Date.UTC(map.year,map.month-1,map.day);
+}
+function setupDday() {
+  const difference = Math.round((Date.UTC(2027,3,17) - kstToday()) / 86400000);
+  byId('exam-dday').textContent = difference > 0 ? `D-${difference}` : difference === 0 ? 'D-DAY' : `D+${-difference}`;
+}
+function create(tag, attrs = {}, text) {
+  const node = document.createElement(tag);
+  for (const [key, value] of Object.entries(attrs)) {
+    if (key === 'class') node.className = value;
+    else node.setAttribute(key, value);
+  }
+  if (text !== undefined) node.textContent = String(text);
+  return node;
+}
+function displayNotices() {
+  const area = byId('notices-list');
+  area.replaceChildren();
+  const all = Array.isArray(currentData?.items) ? currentData.items : [];
+  const items = all.filter((p) => currentFilter === 'all' || String(p.title).includes('2027'));
+  if (!items.length) {
+    const empty = create('div', {class: 'empty-message'});
+    empty.append(create('strong', {}, '아직 확인된 공고가 없습니다.'), create('span', {}, '공식 공고가 확인되면 이곳에 표시됩니다.'));
+    area.append(empty); return;
+  }
+  for (const p of items) {
+    const card = create('article', {class:'notice-card'});
+    const content = create('div', {class:'notice-card-info'});
+    const meta = create('div', {class:'notice-meta'});
+    meta.append(create('span',{class:'category-pill'}, '계리직'));
+    meta.append(create('time',{},p.date || '날짜 미확인'));
+    if (String(p.title).includes('2027')) meta.append(create('span',{class:'year-pill'},'2027'));
+    if (p.example) meta.append(create('span',{class:'example-pill'},'초기 예시'));
+    const names = Array.isArray(p.sources) ? p.sources : [p.source || '공식 출처'];
+    meta.append(create('span',{class:'source-brand'},names.join(' · ')));
+    content.append(meta, create('h3', {class:'notice-title'},p.title || '제목 없음'));
+    const open = create('a', {class:'notice-open', href:safeSourceUrl(p.url),target:'_blank',rel:'noopener noreferrer','aria-label':'공식 공고 원문 열기'},'↗');
+    card.append(content,open);
+    area.append(card);
+  }
+}
+function updateStatus(data) {
+  const badge = byId('monitor-status'),caption = byId('monitor-caption');
+  const info = byId('data-message');
+  info.className='data-message';
+  if (data.status === 'ok') {badge.textContent='정상 확인';caption.textContent='우정사업본부 · 국가공무원 채용시스템';}
+  else if (data.status === 'error') {badge.textContent='확인 실패';caption.textContent='공식 사이트에 접근하지 못했습니다';info.classList.add('error');}
+  else if (data.status === 'warning') {badge.textContent='일부 오류';caption.textContent='한 곳의 확인 또는 이메일 발송이 실패했습니다';info.classList.add('warning');}
+  else {badge.textContent='설정 대기';caption.textContent='GitHub 자동 실행을 활성화해 주세요';}
+  const items = Array.isArray(data.items) ? data.items : [];
+  const count = byId('count-2027');
+  count.replaceChildren(document.createTextNode(data.status === 'setup' ? '—' : String(items.filter(x=>String(x.title).includes('2027')).length)),create('small',{},'건'));
+  byId('last-checked').textContent = data.checked_at ? formatKstDate(data.checked_at,true) : '미확인';
+  info.textContent = data.message || '';
+  byId('email-status').replaceChildren(create('span',{class:'small-indicator'}),
+    document.createTextNode(data.email_enabled ? '이메일 알림 연결됨' : '이메일 알림 미설정'));
+  const sourceEl = byId('source-health'); sourceEl.replaceChildren();
+  for (const [name,value] of Object.entries(data.sources || {})) {
+    sourceEl.append(create('span',{class:data.status === 'setup' ? '' : value.ok ? '' : 'source-failure'},
+      `${name} · ${data.status === 'setup' ? '연결 대기' : value.ok ? `확인 완료 (${value.count}건)` : '확인 실패'}`));
+  }
+  const newIds = Array.isArray(data.new_ids) ? data.new_ids : [];
+  const unseen = items.filter(x=>newIds.includes(x.id));
+  const banner=byId('new-notice-banner');
+  banner.hidden = !unseen.length;
+  banner.textContent = unseen.length ? `최근 점검에서 신규 계리직 공고 ${unseen.length}건이 확인되었습니다. 아래에서 공고를 확인하세요.` : '';
+}
+function refreshWebStatus() {
+  const el = byId('browser-status');
+  const available = 'Notification' in window && window.isSecureContext;
+  const enabled = storage.get(WEB_ENABLED_KEY) === 'yes';
+  const msg = !available ? '웹 알림을 지원하지 않는 환경입니다 (HTTPS 필요)'
+    : !enabled ? '이 브라우저의 웹 알림 꺼짐'
+    : Notification.permission === 'granted' ? '웹 알림 켜짐 · 사이트 방문 시 알림'
+    : Notification.permission === 'denied' ? '브라우저에서 알림이 차단됨' : '웹 알림 권한 허용 필요';
+  el.replaceChildren(create('span',{class:'small-indicator'}),document.createTextNode(msg));
+  byId('enable-web-notifications').textContent=enabled ? '이 브라우저에서 알림 다시 설정 ↗':'이 브라우저에서 알림 켜기 ↗';
+}
+function compareWithPrevious(items) {
+  if (storage.get(WEB_ENABLED_KEY) !== 'yes') return;
+  const ids = items.filter(p=>!p.example).map(p=>p.id);
+  const previousRaw=storage.get(WEB_SEEN_KEY);
+  if (previousRaw === null) {storage.set(WEB_SEEN_KEY, JSON.stringify(ids)); return;}
+  let prior=[];
+  try { prior=JSON.parse(previousRaw); if(!Array.isArray(prior)) prior=[]; } catch(_){prior=[];}
+  const previousSet = new Set(prior);
+  const newItems = items.filter(p=>!p.example && !previousSet.has(p.id));
+  // 기존 기록과 누적하여 일시적인 오류/게시판 페이지 차이에도 중복 방지.
+  storage.set(WEB_SEEN_KEY,JSON.stringify([...new Set([...prior,...ids])].slice(-300)));
+  if (!newItems.length) return;
+  const banner=byId('new-notice-banner');banner.hidden=false;
+  banner.textContent=`지난 방문 이후 계리직 새 공고 ${newItems.length}건이 등록되었습니다: ${newItems[0].title}`;
+  if ('Notification' in window && Notification.permission==='granted') {
+    try { new Notification('계리직 공식 새 공고', {body:`${newItems.length}건 · ${newItems[0].title}`,tag:'gyeri-notice'}); } catch (_) { /* 표시 배너로 대체 */ }
+  }
+}
+async function enableBrowserNotifications() {
+  if (!('Notification' in window) || !window.isSecureContext) {refreshWebStatus();return;}
+  const result=await Notification.requestPermission();
+  if (result==='granted') {
+    storage.set(WEB_ENABLED_KEY,'yes');
+    const ids=(currentData?.items||[]).filter(p=>!p.example).map(p=>p.id);
+    storage.set(WEB_SEEN_KEY,JSON.stringify(ids));
+  }
+  refreshWebStatus();
+}
+async function loadData() {
+  const button=byId('reload-button');button.disabled=true;
+  try {
+    const response=await fetch(`data/notices.json?t=${Date.now()}`,{cache:'no-store'});
+    if (!response.ok) throw Error(`HTTP ${response.status}`);
+    currentData=await response.json();
+    updateStatus(currentData);
+    displayNotices();
+    if (currentData.status !== 'setup' && currentData.status !== 'error') compareWithPrevious(currentData.items || []);
+  } catch (_) {
+    const el=byId('data-message'); el.className='data-message error';
+    el.textContent='웹사이트 데이터 로딩 실패. GitHub Pages 배포 상태를 확인해 주세요.';
+    if (!currentData) byId('notices-list').replaceChildren(create('div',{class:'empty-message'},'공고 데이터를 불러오지 못했습니다.'));
+  } finally {button.disabled=false;}
+}
+byId('today').textContent=formatKstDate(new Date().toISOString());
+setupDday(); refreshWebStatus();
+byId('reload-button').addEventListener('click', loadData);
+byId('enable-web-notifications').addEventListener('click', enableBrowserNotifications);
+for (const tab of document.querySelectorAll('.filter-tab')) {
+  tab.addEventListener('click',()=>{
+    currentFilter=tab.dataset.filter;
+    for (const other of document.querySelectorAll('.filter-tab')) {
+      const active=tab===other;other.classList.toggle('active',active);other.setAttribute('aria-pressed',String(active));
+    }
+    displayNotices();
+  });
+}
+loadData();
+// 웹페이지를 열어둔 동안 저장된 공고 데이터를 1분마다 갱신 (실제 공식 검사 주기와 별도)
+window.setInterval(loadData,60_000);
+</script>
+</body>
+</html>

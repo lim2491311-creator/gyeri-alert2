@@ -1,0 +1,4 @@
+beautifulsoup4>=4.12,<5
+playwright>=1.49,<2
+requests>=2.31,<3
+pytest>=8,<10

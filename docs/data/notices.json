@@ -1,0 +1,25 @@
+{
+  "checked_at": null,
+  "status": "setup",
+  "message": "GitHub Actions를 실행하면 우정사업본부 및 국가공무원 채용시스템 공고가 갱신됩니다.",
+  "alerts_enabled": false,
+  "email_enabled": false,
+  "sources": {
+    "우정사업본부": {"ok": false, "error": "아직 확인 전"},
+    "국가공무원 채용시스템": {"ok": false, "error": "아직 확인 전"}
+  },
+  "new_ids": [],
+  "source_url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+  "items": [
+    {
+      "id": "sample-2026",
+      "title": "2026년도 우정사업본부 우정9급(계리) 공무원 공개경쟁채용시험 시행계획 공고",
+      "date": "2025-12-24",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": ["우정사업본부"],
+      "example": true
+    }
+  ]
+}
