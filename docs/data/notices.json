@@ -1,25 +1,160 @@
 {
-  "checked_at": null,
-  "status": "setup",
-  "message": "GitHub Actions를 실행하면 우정사업본부 및 국가공무원 채용시스템 공고가 갱신됩니다.",
+  "checked_at": "2026-10-17T11:47:48+00:00",
+  "status": "ok",
+  "message": "공식 계리직 채용공고 확인 완료",
   "alerts_enabled": false,
   "email_enabled": false,
   "sources": {
-    "우정사업본부": {"ok": false, "error": "아직 확인 전"},
-    "국가공무원 채용시스템": {"ok": false, "error": "아직 확인 전"}
+    "우정사업본부": {
+      "ok": true,
+      "count": 7
+    },
+    "국가공무원 채용시스템": {
+      "ok": true,
+      "count": 10
+    }
   },
-  "new_ids": [],
+  "new_ids": [
+    "notice:c0d4dd0ff51e81a7bf0b",
+    "notice:190a280a14e868b6cd65",
+    "notice:b6662b9b49036f11ca05",
+    "notice:729d4b41ac7971d874ca",
+    "notice:c3db42255f01bc49aaac",
+    "notice:be8a9928770db267708c",
+    "notice:824bdf4544bb21d34840",
+    "notice:b6dacded3ff6806e5b97",
+    "notice:b71cccc0ab0b97759cdf",
+    "notice:bbcfddab423f01a2d1fc",
+    "notice:819de4eebd02470b36df"
+  ],
   "source_url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
   "items": [
     {
-      "id": "sample-2026",
+      "id": "notice:c0d4dd0ff51e81a7bf0b",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용 최종합격자 발표 및 채용후보자 등록 공고",
+      "date": "2026-06-12",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부",
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:190a280a14e868b6cd65",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용 면접시험 세부일정 및 응시자 준수사항 공고",
+      "date": "2026-05-12",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부",
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:b6662b9b49036f11ca05",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용 필기시험 합격자 및 면접시험 일정 공고",
+      "date": "2026-04-24",
+      "url": "https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do",
+      "category": "계리직",
+      "source": "국가공무원 채용시스템",
+      "sources": [
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:729d4b41ac7971d874ca",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용 필기시험 응시현황(잠정) 게시",
+      "date": "2026-04-01",
+      "url": "https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do",
+      "category": "계리직",
+      "source": "국가공무원 채용시스템",
+      "sources": [
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:c3db42255f01bc49aaac",
+      "title": "2026년도 우정9급(계리) 공무원 공채 필기시험 정답가안 및 문제 게시",
+      "date": "2026-03-28",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부"
+      ]
+    },
+    {
+      "id": "notice:be8a9928770db267708c",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용 필기시험 일시, 장소 및 응시자 준수사항 공고",
+      "date": "2026-03-09",
+      "url": "https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do",
+      "category": "계리직",
+      "source": "국가공무원 채용시스템",
+      "sources": [
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:824bdf4544bb21d34840",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용시험 편의지원 대상자(잠정)",
+      "date": "2026-02-04",
+      "url": "https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do",
+      "category": "계리직",
+      "source": "국가공무원 채용시스템",
+      "sources": [
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:b6dacded3ff6806e5b97",
+      "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용시험 원서접수 결과 게시",
+      "date": "2026-01-23",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부",
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:b71cccc0ab0b97759cdf",
+      "title": "2026년도 우정사업본부 우정9급(계리) 공무원 공개경쟁채용시험 장애인 등 응시자 편의제공 안내 변경",
+      "date": "2026-01-08",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부",
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:bbcfddab423f01a2d1fc",
+      "title": "2026년도 우정사업본부 우정9급(계리) 공무원 공개경쟁채용시험 모집구분 변경 공고",
+      "date": "2026-01-05",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부",
+        "국가공무원 채용시스템"
+      ]
+    },
+    {
+      "id": "notice:819de4eebd02470b36df",
       "title": "2026년도 우정사업본부 우정9급(계리) 공무원 공개경쟁채용시험 시행계획 공고",
       "date": "2025-12-24",
       "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
       "category": "계리직",
       "source": "우정사업본부",
-      "sources": ["우정사업본부"],
-      "example": true
+      "sources": [
+        "우정사업본부",
+        "국가공무원 채용시스템"
+      ]
     }
   ]
 }

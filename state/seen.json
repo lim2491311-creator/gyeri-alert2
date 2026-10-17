@@ -1,6 +1,18 @@
 {
-  "initialized": false,
-  "known_ids": [],
+  "initialized": true,
+  "known_ids": [
+    "notice:190a280a14e868b6cd65",
+    "notice:729d4b41ac7971d874ca",
+    "notice:819de4eebd02470b36df",
+    "notice:824bdf4544bb21d34840",
+    "notice:b6662b9b49036f11ca05",
+    "notice:b6dacded3ff6806e5b97",
+    "notice:b71cccc0ab0b97759cdf",
+    "notice:bbcfddab423f01a2d1fc",
+    "notice:be8a9928770db267708c",
+    "notice:c0d4dd0ff51e81a7bf0b",
+    "notice:c3db42255f01bc49aaac"
+  ],
   "pending_ids": [],
   "sent_ids": []
 }
