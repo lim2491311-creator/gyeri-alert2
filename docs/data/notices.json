@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T11:47:48+00:00",
+  "checked_at": "2026-10-17T11:49:32+00:00",
   "status": "ok",
   "message": "공식 계리직 채용공고 확인 완료",
   "alerts_enabled": false,
@@ -14,19 +14,7 @@
       "count": 10
     }
   },
-  "new_ids": [
-    "notice:c0d4dd0ff51e81a7bf0b",
-    "notice:190a280a14e868b6cd65",
-    "notice:b6662b9b49036f11ca05",
-    "notice:729d4b41ac7971d874ca",
-    "notice:c3db42255f01bc49aaac",
-    "notice:be8a9928770db267708c",
-    "notice:824bdf4544bb21d34840",
-    "notice:b6dacded3ff6806e5b97",
-    "notice:b71cccc0ab0b97759cdf",
-    "notice:bbcfddab423f01a2d1fc",
-    "notice:819de4eebd02470b36df"
-  ],
+  "new_ids": [],
   "source_url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
   "items": [
     {
