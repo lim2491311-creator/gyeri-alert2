@@ -1,17 +1,17 @@
 {
-  "checked_at": "2026-10-18T17:36:53+00:00",
-  "status": "ok",
-  "message": "공식 계리직 채용공고 확인 완료",
+  "checked_at": "2026-10-18T18:41:36+00:00",
+  "status": "error",
+  "message": "공식 사이트 2곳 모두 확인 실패. 공고 없음으로 판정하지 않습니다.",
   "alerts_enabled": true,
   "email_enabled": true,
   "sources": {
     "우정사업본부": {
-      "ok": true,
-      "count": 7
+      "ok": false,
+      "error": "ConnectTimeout"
     },
     "국가공무원 채용시스템": {
-      "ok": true,
-      "count": 10
+      "ok": false,
+      "error": "TimeoutError"
     }
   },
   "new_ids": [],
