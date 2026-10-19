@@ -19,11 +19,18 @@ from urllib.parse import urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / 'docs/data/notices.json'
 STATE_PATH = ROOT / 'state/seen.json'
 POSTAL_URL = 'https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do'
+# 같은 채용공고를 표시하는 우정사업본부 산하기관의 공식 공유 게시판
+POSTAL_MIRRORS = [
+    'https://www.koreapost.go.kr/user/extra/638/95/1933/bbs/recnotice/recNoticeList/jsp/ExtraUser.do',
+    'https://www.koreapost.go.kr/user/extra/220c/95/3653/bbs/recnotice/recNoticeList/jsp/ExtraUser.do',
+]
 GOSI_URL = 'https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancLst.do'
 GOSI_MAIN = 'https://gongmuwon.gosi.kr/oprut/indexMain.do'
 GOSI_DETAIL = 'https://gongmuwon.gosi.kr/oprut/RpaRpTestPbancDtl.do?pstId='
@@ -124,25 +131,29 @@ def parse_postal_html(html: str) -> list[dict]:
 
 
 def parse_gosi_html(html: str) -> list[dict]:
+    """표 형식이 달라도 제목+날짜+계리직 분류를 이용합니다."""
     soup = BeautifulSoup(html, 'html.parser')
     results = []
     for row in soup.select('tr'):
         cells = row.find_all('td', recursive=False)
-        if len(cells) < 3:
+        if len(cells) < 2:
             continue
         texts = [normalize_title(c.get_text(' ', strip=True)) for c in cells]
-        # 시험종류에 '계리직'이 명시된 항목만 채택.
-        if not any(text == '계리직' for text in texts[:3]):
+        date = next((d for t in texts if (d := normalize_date(t))), '')
+        if not date:
             continue
-        date = next((normalize_date(t) for t in texts if normalize_date(t)), '')
-        titles = [t for t in texts if is_gyeri_title(t) and t != '계리직' and len(t) > 12]
-        title = max(titles, key=len, default='')
+        category = any(t == '계리직' for t in texts)
+        links = [normalize_title(a.get_text(' ', strip=True)) for a in row.select('a')]
+        titles = [t for t in links + texts if is_gyeri_title(t) and t != '계리직' and len(t) > 12]
+        if not titles or not (category or any('우정9급' in t and is_gyeri_title(t) for t in titles)):
+            continue
+        title = max(titles, key=len)
         pid = extract_post_id(str(row))
-        result = build_post(title, date, '국가공무원 채용시스템', GOSI_DETAIL + pid if pid else GOSI_URL)
-        if result:
-            results.append(result)
+        detail = next((a.get('href', '') for a in row.select('a') if is_gyeri_title(a.get_text(' ', strip=True)) and a.get('href', '').startswith('https://gongmuwon.gosi.kr/oprut/')), '')
+        post = build_post(title, date, '국가공무원 채용시스템', detail or (GOSI_DETAIL + pid if pid else GOSI_URL))
+        if post:
+            results.append(post)
     return dedupe(results)
-
 
 def parse_gosi_main(html: str) -> list[dict]:
     soup = BeautifulSoup(html, 'html.parser')
@@ -188,60 +199,181 @@ def dedupe(posts: list[dict]) -> list[dict]:
     return sorted(result.values(), key=lambda x: (x['date'], x['id']), reverse=True)
 
 
-def query_postal() -> list[dict]:
-    response = requests.get(POSTAL_URL, timeout=25,
-                            headers={'User-Agent': 'Mozilla/5.0 (compatible; GyerijiNoticeCheck/1.0)'})
+# 봇 식별 UA만 보냈을 때 일부 기관이 403을 반환할 수 있어 일반 브라우저 헤더를 사용합니다.
+BROWSER_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.7',
+}
+
+
+def make_session() -> requests.Session:
+    session = requests.Session()
+    session.headers.update(BROWSER_HEADERS)
+    retry = Retry(total=2, backoff_factor=0.6, status_forcelist=[429, 500, 502, 503, 504])
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('https://', adapter)
+    return session
+
+
+def load_html(session: requests.Session, url: str, **kwargs) -> str:
+    response = session.get(url, timeout=18, **kwargs)
     response.raise_for_status()
-    response.encoding = response.apparent_encoding or response.encoding
-    if not any(word in response.text for word in ('채용공고', '게시판 리스트', '인재채용팀')):
-        raise RuntimeError('채용공고 게시판 HTML이 아닌 응답')
-    # 공지 고정글을 포함하여 계리 관련 게시물 추출. 없더라도 게시판이면 유효한 0건.
-    return parse_postal_html(response.text)
+    # 한국어 HTML을 자동 감지 결과가 잘못 디코딩하는 문제를 방지합니다.
+    response.encoding = response.encoding if response.encoding and response.encoding.lower() != 'iso-8859-1' else (response.apparent_encoding or 'utf-8')
+    text = response.text
+    if '<html' not in text.lower() and '<table' not in text.lower():
+        raise RuntimeError('HTML 문서가 아닌 응답')
+    return text
+
+
+def valid_postal_board(html: str) -> bool:
+    soup = BeautifulSoup(html, 'html.parser')
+    headers = soup.get_text(' ', strip=True)
+    # 단순히 사이트 메뉴에 '채용공고'가 있다는 이유로 성공 처리하지 않습니다.
+    return bool(soup.select('tr')) and '채용공고' in headers and '작성일' in headers and '제목' in headers
+
+
+def valid_gosi_board(html: str) -> bool:
+    soup = BeautifulSoup(html, 'html.parser')
+    text = soup.get_text(' ', strip=True)
+    return bool(soup.select('table')) and '시험구분' in text and '게시일' in text and '공고명' in text
+
+
+def display_error(exc: Exception) -> str:
+    """공개 JSON/로그에는 민감한 값 없이 오류 종류와 상태 코드만 기록합니다."""
+    if isinstance(exc, requests.exceptions.HTTPError) and exc.response is not None:
+        return f'HTTP {exc.response.status_code}'
+    if isinstance(exc, requests.exceptions.Timeout):
+        return '응답 시간 초과'
+    if isinstance(exc, requests.exceptions.ConnectionError):
+        return '연결 오류 (DNS/SSL/접속 차단 가능)'
+    return type(exc).__name__ + (f': {str(exc)[:100]}' if isinstance(exc, RuntimeError) else '')
+
+
+def query_postal() -> list[dict]:
+    errors = []
+    session = make_session()
+    # 우정사업본부 본부 게시판이 차단되면 공식 공유 게시판을 순서대로 확인합니다.
+    for url in [POSTAL_URL, *POSTAL_MIRRORS]:
+        try:
+            html = load_html(session, url)
+            if not valid_postal_board(html):
+                raise RuntimeError('채용공고 목록 표를 찾지 못함')
+            return parse_postal_html(html)
+        except Exception as exc:
+            errors.append(f'{urlparse(url).path.split("/")[3]}: {display_error(exc)}')
+    # 요청 방식이 막힌 경우 브라우저 렌더링을 마지막으로 시도합니다.
+    try:
+        from playwright.sync_api import sync_playwright
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=True, args=['--no-sandbox'])
+            try:
+                page = browser.new_page(locale='ko-KR', user_agent=BROWSER_HEADERS['User-Agent'])
+                page.goto(POSTAL_URL, wait_until='domcontentloaded', timeout=25000)
+                page.locator('table').first.wait_for(timeout=8000)
+                html = page.content()
+                if not valid_postal_board(html):
+                    raise RuntimeError('브라우저로도 채용공고 표 확인 실패')
+                return parse_postal_html(html)
+            finally:
+                browser.close()
+    except Exception as exc:
+        errors.append('브라우저: '+display_error(exc))
+    raise RuntimeError('우정사업본부 공식 채용공고 조회 불가 / ' + ' / '.join(errors))
+
+
+def gosi_filter(html: str) -> tuple[str, str]:
+    """필터 HTML의 select에서 '계리직' 옵션 값과 필드 이름을 찾습니다."""
+    soup = BeautifulSoup(html, 'html.parser')
+    for select in soup.select('select'):
+        for option in select.select('option'):
+            if normalize_title(option.get_text(' ', strip=True)) == '계리직':
+                return (select.get('name') or select.get('id') or 'testGrpCd', option.get('value', ''))
+    return ('', '')
+
+
+def filtered_gosi_result(html: str) -> list[dict] | None:
+    """계리 게시글 또는 진짜 0건 응답만 유효. 미적용 전체 목록은 실패로 취급."""
+    if not valid_gosi_board(html):
+        return None
+    posts = parse_gosi_html(html)
+    if posts:
+        return posts
+    if any(x in BeautifulSoup(html, 'html.parser').get_text(' ', strip=True)
+           for x in ('조회된 결과가 없습니다', '검색 결과가 없습니다', '검색결과가 없습니다')):
+        return []
+    return None
 
 
 def query_gosi() -> list[dict]:
-    from playwright.sync_api import sync_playwright
-    with sync_playwright() as pw:
-        browser = pw.chromium.launch(headless=True, args=['--no-sandbox'])
-        page = browser.new_page(locale='ko-KR', user_agent='Mozilla/5.0 Chrome/125.0.0.0 Safari/537.36')
-        try:
-            page.goto(GOSI_URL, wait_until='domcontentloaded', timeout=35000)
-            page.wait_for_timeout(1200)
-            found_category = False
-            for select in page.locator('select').all():
-                try:
-                    for option in select.locator('option').all():
-                        if option.inner_text().strip() == '계리직':
-                            select.select_option(value=option.get_attribute('value'), timeout=3000)
-                            found_category = True
-                            break
-                except Exception:
-                    pass
-                if found_category:
-                    break
-            if found_category:
-                try:
-                    button = page.get_by_role('button', name=re.compile('검색')).first
-                    if button.count() and button.is_visible():
-                        button.click(timeout=3500)
-                except Exception:
-                    pass
-                page.wait_for_timeout(1500)
-            results = parse_gosi_html(page.content())
-            if results:
-                return results
-            # 검색에서 '계리직' 선택했고 표가 정상 로딩된 상태라면 새 글이 0건일 수 있습니다.
-            if found_category and page.locator('table').count():
-                return []
-            page.goto(GOSI_MAIN, wait_until='domcontentloaded', timeout=35000)
-            page.wait_for_timeout(1200)
-            fallback = parse_gosi_main(page.content())
-            if fallback:
-                return fallback
-            raise RuntimeError('계리직 게시판을 판독하지 못했습니다')
-        finally:
-            browser.close()
+    errors = []
+    try:
+        session = make_session()
+        original_html = load_html(session, GOSI_URL)
+        field, value = gosi_filter(original_html)
+        if field and value:
+            # 공식 홈페이지에서 제공한 계리직 필터 값을 재사용합니다.
+            params = {field: value, 'testGrpCd': value, 'sGubun': '', 'sKeyword': ''}
+            try:
+                filtered_html = load_html(session, GOSI_URL, params=params)
+                filtered = filtered_gosi_result(filtered_html)
+                if filtered is not None:
+                    return filtered
+            except Exception as exc:
+                errors.append('HTML 필터: ' + display_error(exc))
+        # 필터가 없는 일반 목록에서 계리 게시물이 노출된 경우는 수집합니다.
+        posts = parse_gosi_html(original_html)
+        if posts:
+            return posts
+        errors.append('HTML: 계리직 항목/유효 필터 조회 불가')
+    except Exception as exc:
+        errors.append('HTML 요청: '+display_error(exc))
 
+    # 계리직 필터를 자동 선택하는 브라우저 경로. 검색 버튼 형태가 달라도 대응.
+    try:
+        from playwright.sync_api import sync_playwright
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(headless=True, args=['--no-sandbox'])
+            try:
+                page = browser.new_page(locale='ko-KR', user_agent=BROWSER_HEADERS['User-Agent'])
+                page.goto(GOSI_URL, wait_until='domcontentloaded', timeout=35000)
+                page.wait_for_timeout(1600)
+                selected = False
+                for dropdown in page.locator('select').all():
+                    try:
+                        options = dropdown.locator('option').all()
+                        match = next((o for o in options if o.inner_text().strip() == '계리직'), None)
+                        if match is None:
+                            continue
+                        dropdown.select_option(value=match.get_attribute('value'), timeout=3000)
+                        selected = True
+                        break
+                    except Exception:
+                        continue
+                if selected:
+                    for selector in ['button:has-text("검색")', 'input[type="submit"]', 'a:has-text("검색")', '[onclick*="search"]', '[onclick*="Search"]']:
+                        try:
+                            target = page.locator(selector).first
+                            if target.count() and target.is_visible():
+                                target.click(timeout=3500)
+                                break
+                        except Exception:
+                            continue
+                    page.wait_for_timeout(2200)
+                    filtered = filtered_gosi_result(page.content())
+                    if filtered is not None:
+                        return filtered
+                # 필터 조작 실패해도 게시판에 계리직 항목이 있으면 수집합니다.
+                results = parse_gosi_html(page.content())
+                if results:
+                    return results
+                errors.append('브라우저: 필터 결과 검증 실패')
+            finally:
+                browser.close()
+    except Exception as exc:
+        errors.append('브라우저: '+display_error(exc))
+    raise RuntimeError('국가공무원 채용시스템 조회 불가 / ' + ' / '.join(errors))
 
 def query_both() -> tuple[list[dict], dict]:
     posts = []
@@ -252,7 +384,8 @@ def query_both() -> tuple[list[dict], dict]:
             posts.extend(current)
             results[label] = {'ok': True, 'count': len(current)}
         except Exception as exc:
-            results[label] = {'ok': False, 'error': type(exc).__name__}
+            results[label] = {'ok': False, 'error': display_error(exc)}
+            print(f'[수집 오류] {label}: {display_error(exc)}', file=sys.stderr)
     return dedupe(posts), results
 
 
@@ -334,7 +467,7 @@ def main() -> int:
     if not any(x.get('ok') for x in results.values()):
         previous = load_json(DATA_PATH, {'items': []})
         previous.update({'checked_at': utc_now(), 'status': 'error',
-                         'message': '공식 사이트 2곳 모두 확인 실패. 공고 없음으로 판정하지 않습니다.',
+                         'message': '공식 사이트 2곳 모두 확인 실패. 이전 공고만 표시하며, 새 공고 없음으로 판정하지 않습니다.',
                          'alerts_enabled': all(config.values()),
                          'email_enabled': all(config.values()), 'sources': results,
                          'new_ids': []})

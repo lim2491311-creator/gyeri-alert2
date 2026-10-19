@@ -16,3 +16,6 @@
 .source-brand{font-weight:700;color:#5a7c60;margin-left:2px}
 @media(max-width:1150px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid .stat-card:last-child{grid-column:auto}.source-label{font-size:9px;max-width:152px;text-align:right}.notice-footer{justify-content:flex-start}}
+
+/* 오류 원인 표시 시 모바일에서 긴 문자열이 화면을 밀지 않도록 */
+.source-health span { overflow-wrap: anywhere; max-width: 100%; line-height: 1.65; }

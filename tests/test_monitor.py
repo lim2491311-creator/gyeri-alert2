@@ -111,3 +111,60 @@ def test_only_new_post_after_initial_is_mailed(tmp_path,monkeypatch):
 def test_only_official_urls_allowed():
     assert m.allow_official_url('javascript:alert(1)',m.POSTAL_URL)==m.POSTAL_URL
     assert m.allow_official_url('https://evil.test/attack',m.POSTAL_URL)==m.POSTAL_URL
+
+# v3 회귀 테스트: 공식 사이트 장애와 HTML 구조 변화 대응
+
+def test_validates_official_board_not_just_menu_text():
+    assert m.valid_postal_board(POSTAL_HTML)
+    assert not m.valid_postal_board('<html><body><nav>채용공고</nav></body></html>')
+    assert m.valid_gosi_board(GOSI_HTML.replace('<table>', '<table><tr><th>시험구분</th><th>공고명</th><th>게시일</th></tr>'))
+    assert not m.valid_gosi_board('<html><nav>시험공고</nav></html>')
+
+
+def test_postal_fallback_official_mirror(monkeypatch):
+    class FakeSession:
+        def __init__(self): self.calls=[]
+    session=FakeSession()
+    monkeypatch.setattr(m, 'make_session', lambda: session)
+    def fake_html(sess, url, **kwargs):
+        sess.calls.append(url)
+        if url == m.POSTAL_URL:
+            raise RuntimeError('primary blocked')
+        return POSTAL_HTML
+    monkeypatch.setattr(m, 'load_html', fake_html)
+    posts=m.query_postal()
+    assert len(posts)==2
+    assert session.calls==[m.POSTAL_URL, m.POSTAL_MIRRORS[0]]
+
+
+def test_gosi_filtered_html_works_without_browser(monkeypatch):
+    html = '<html><select name="testGrpCd"><option value="">전체</option><option value="GR">계리직</option></select><table><tr><th>시험구분</th><th>공고명</th><th>게시일</th></tr></table></html>'
+    category_html=GOSI_HTML.replace('<table>', '<table><tr><th>번호</th><th>시험구분</th><th>공고명</th><th>게시일</th></tr>')
+    class FakeSession: pass
+    monkeypatch.setattr(m,'make_session',FakeSession)
+    queried=[]
+    def fake_get(session,url,**kwargs):
+        queried.append(kwargs)
+        return category_html if kwargs.get('params') else html
+    monkeypatch.setattr(m,'load_html',fake_get)
+    result=m.query_gosi()
+    assert len(result)==2
+    assert queried[1]['params']['testGrpCd']=='GR'
+
+
+def test_no_false_gosi_success_when_filter_missing():
+    non_gyeri=GOSI_HTML.replace('계리직','9급 공채').replace('우정9급(계리)','행정9급')
+    non_gyeri=non_gyeri.replace('<table>','<table><tr><th>시험구분</th><th>공고명</th><th>게시일</th></tr>')
+    assert m.filtered_gosi_result(non_gyeri) is None
+
+
+def test_total_fetch_failure_preserves_cached_entries(tmp_path,monkeypatch):
+    setup_fake_files(tmp_path, monkeypatch)
+    p=m.parse_postal_html(POSTAL_HTML)
+    m.save_json(m.DATA_PATH,{'items':p})
+    monkeypatch.setattr(m,'query_both', lambda:([], {'우정사업본부':{'ok':False,'error':'HTTP 403'},'국가공무원 채용시스템':{'ok':False,'error':'Timeout'}}))
+    assert m.main()==0
+    result=m.load_json(m.DATA_PATH,{})
+    assert result['status']=='error'
+    assert len(result['items'])==len(p)
+    assert '없음으로 판정하지' in result['message']

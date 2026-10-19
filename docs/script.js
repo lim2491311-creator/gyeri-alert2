@@ -88,7 +88,7 @@ function updateStatus(data) {
   const sourceEl = byId('source-health'); sourceEl.replaceChildren();
   for (const [name,value] of Object.entries(data.sources || {})) {
     sourceEl.append(create('span',{class:data.status === 'setup' ? '' : value.ok ? '' : 'source-failure'},
-      `${name} · ${data.status === 'setup' ? '연결 대기' : value.ok ? `확인 완료 (${value.count}건)` : '확인 실패'}`));
+      `${name} · ${data.status === 'setup' ? '연결 대기' : value.ok ? `확인 완료 (${value.count}건)` : `확인 실패: ${value.error || '원인 미확인'}`}`));
   }
   const newIds = Array.isArray(data.new_ids) ? data.new_ids : [];
   const unseen = items.filter(x=>newIds.includes(x.id));
