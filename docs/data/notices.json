@@ -1,17 +1,17 @@
 {
-  "checked_at": "2026-10-19T22:41:04+00:00",
-  "status": "error",
-  "message": "공식 사이트 2곳 모두 확인 실패. 공고 없음으로 판정하지 않습니다.",
+  "checked_at": "2026-10-19T23:00:55+00:00",
+  "status": "warning",
+  "message": "국가공무원 채용시스템 확인 실패",
   "alerts_enabled": true,
   "email_enabled": true,
   "sources": {
     "우정사업본부": {
-      "ok": false,
-      "error": "ConnectTimeout"
+      "ok": true,
+      "count": 7
     },
     "국가공무원 채용시스템": {
       "ok": false,
-      "error": "TimeoutError"
+      "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML: 계리직 항목/유효 필터 조회 불가 / 브라우저: 필터 결과 검증 실패"
     }
   },
   "new_ids": [],
