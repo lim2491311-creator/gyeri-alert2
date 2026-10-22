@@ -1,17 +1,17 @@
 {
-  "checked_at": "2026-10-22T21:45:02+00:00",
-  "status": "error",
-  "message": "공식 사이트 2곳 모두 확인 실패. 이전 공고만 표시하며, 새 공고 없음으로 판정하지 않습니다.",
+  "checked_at": "2026-10-22T22:48:51+00:00",
+  "status": "warning",
+  "message": "국가공무원 채용시스템 확인 실패",
   "alerts_enabled": true,
   "email_enabled": true,
   "sources": {
     "우정사업본부": {
-      "ok": false,
-      "error": "RuntimeError: 우정사업본부 공식 채용공고 조회 불가 / kpost: 응답 시간 초과 / 638: 응답 시간 초과 / 220c: 응답 시간 초과 / 브라우저: TimeoutError"
+      "ok": true,
+      "count": 7
     },
     "국가공무원 채용시스템": {
       "ok": false,
-      "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML 요청: 응답 시간 초과 / 브라우저: TimeoutError"
+      "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML: 계리직 항목/유효 필터 조회 불가 / 브라우저: 필터 결과 검증 실패"
     }
   },
   "new_ids": [],
