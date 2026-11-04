@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-04T06:06:50+00:00",
+  "checked_at": "2026-11-04T07:25:04+00:00",
   "status": "warning",
   "message": "국가공무원 채용시스템 확인 실패",
   "alerts_enabled": true,
@@ -11,7 +11,7 @@
     },
     "국가공무원 채용시스템": {
       "ok": false,
-      "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML 필터: RuntimeError: HTML 문서가 아닌 응답 / HTML: 계리직 항목/유효 필터 조회 불가 / 브라우저: 필터 결과 검"
+      "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML: 계리직 항목/유효 필터 조회 불가 / 브라우저: 필터 결과 검증 실패"
     }
   },
   "new_ids": [],
