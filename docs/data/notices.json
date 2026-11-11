@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-11T01:13:07+00:00",
+  "checked_at": "2026-11-11T02:10:43+00:00",
   "status": "warning",
   "message": "국가공무원 채용시스템 확인 실패",
   "alerts_enabled": true,
@@ -14,9 +14,7 @@
       "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML: 계리직 항목/유효 필터 조회 불가 / 브라우저: 필터 결과 검증 실패"
     }
   },
-  "new_ids": [
-    "notice:c8938fd9aadec8bf4394"
-  ],
+  "new_ids": [],
   "source_url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
   "items": [
     {
