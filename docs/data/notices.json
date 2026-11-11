@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-10T23:44:08+00:00",
+  "checked_at": "2026-11-11T01:13:07+00:00",
   "status": "warning",
   "message": "국가공무원 채용시스템 확인 실패",
   "alerts_enabled": true,
@@ -7,16 +7,29 @@
   "sources": {
     "우정사업본부": {
       "ok": true,
-      "count": 7
+      "count": 8
     },
     "국가공무원 채용시스템": {
       "ok": false,
       "error": "RuntimeError: 국가공무원 채용시스템 조회 불가 / HTML: 계리직 항목/유효 필터 조회 불가 / 브라우저: 필터 결과 검증 실패"
     }
   },
-  "new_ids": [],
+  "new_ids": [
+    "notice:c8938fd9aadec8bf4394"
+  ],
   "source_url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
   "items": [
+    {
+      "id": "notice:c8938fd9aadec8bf4394",
+      "title": "2027년도 우정9급(계리) 공무원 공개경쟁채용시험 일정 등 사전 공고",
+      "date": "2026-11-11",
+      "url": "https://www.koreapost.go.kr/user/extra/kpost/95/294/bbs/recnotice/recNoticeList/jsp/ExtraUser.do",
+      "category": "계리직",
+      "source": "우정사업본부",
+      "sources": [
+        "우정사업본부"
+      ]
+    },
     {
       "id": "notice:c0d4dd0ff51e81a7bf0b",
       "title": "2026년도 우정9급(계리) 공무원 공개경쟁채용 최종합격자 발표 및 채용후보자 등록 공고",
